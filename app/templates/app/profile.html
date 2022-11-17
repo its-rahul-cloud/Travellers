@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+
+{% block main %} 
+{% if messages %}
+{% for message in messages %}
+<p id= "message_container" {% if message.tags %}class="alert alert-{{message.tags}}
+mb-5" {% endif %}>{{message}}</p>  
+{% endfor %}
+{% endif %}
+<!-- Begin Top Author Page
+================================================== -->
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 col-md-offset-2">
+			<div class="mainheading">
+				<div class="row post-top-meta authorpage">
+					<div class="col-md-10 col-xs-12">
+						<h1>{{profile.name}}</h1>
+						<span class="author-description"> Email:--<a target="_blank" href="#">  {{profile.email}} </span><div>  </a>Contact no<strong>{{profile.contact_no}}</strong></div>
+						{% if request.user == profile.user %}
+						<a target="_blank" href="{% url 'profile_update' request.user.id %}" class="btn follow">Update</a>
+					    {% endif %}
+					</div>
+					<div class="col-md-2 col-xs-12">
+						<img class="author-thumb" src="{{profile.image.url}}" alt="{{profile.name}}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock main %}
+
