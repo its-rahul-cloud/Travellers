@@ -10,7 +10,7 @@ urlpatterns =[
     path('/profilelist/',views.TravellerListView.as_view(),name='traveller-list'),
     path('home/<int:pk>/',views.HomeDetailView.as_view(),name='home-detail'),
 
-   path('registration/',views.ProfileRegistrationView.as_view(),name = 'registration'),
+   path('accounts/registration/',views.ProfileRegistrationView.as_view(),name = 'registration'),
     path('accounts/login/', auth_view.LoginView.as_view(
         template_name='app/login.html',
         authentication_form=LoginForm,
@@ -53,5 +53,15 @@ urlpatterns =[
 
     path('profile/<int:pk>/',views.ProfileDetailView.as_view(),name='profile-detail'),
     path('profile_update/<int:pk>/',views.ProfileUpdateView.as_view(),name='profile_update'),
+    path('cart/',views.add_to_cart,name='cart'),
+
+
+
+   #POST DETAILS ,DELETE,EDIT
+    path('post_detail/<int:pk>',views.PostDetailView.as_view(),name  = 'post-detail'),
+    path('post_create/',views.PostMakeView.as_view(),name  = 'post-create'),
+    path('post_delete/<int:pk>/',views.PostDeleteView.as_view(),name='post-delete'),
+    path('post',views.PostListView.as_view(),name = 'postlist'),
+    
 
 ]+ static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

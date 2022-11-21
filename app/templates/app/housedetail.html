@@ -13,7 +13,7 @@
                         <div><img src="{{house.image.url}}" class="img-fluid" alt="Responsive image"> </div>
                         <div><strong> Facility Provided</strong> 
                             <p>
-                                {{ house.facility|linebreaksbr}}
+                                {{ house.facility|linebreaksbr|capfirst }}
                             </p></div>
 
                     <div>   <strong> Price</strong> 
@@ -22,12 +22,13 @@
                        </p>
                     </div>
 
-                    <div>   <strong> space</strong> 
+                    <div>
+                         <strong> Space</strong> 
                         <p>
                             {{ house.space|linebreaksbr}}
                         </p>
                      </div>
-                     <div>   <strong> location</strong> 
+                     <div>   <strong> Location</strong> 
                         <p>
                             {{ house.location|linebreaksbr}}
                         </p>
@@ -37,6 +38,8 @@
                             {{ house.houseown.name|linebreaksbr}}
                         </p>
                      </div>
+                     <div><a  href="#"><button type="button" class="btn btn-primary">Buy Now</button></a></div>
+                     <br>
                      
 
 

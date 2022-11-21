@@ -3,20 +3,20 @@
 {% block title %}Home{% endblock title %}
 
 
-{% block main %} 
+{% block main %}
 {% if messages %}
 {% for message in messages %}
 <p id= "message_container" {% if message.tags %}class="alert alert-{{message.tags}}
-mb-5" {% endif %}>{{message}}</p>  
+mb-5" {% endif %}>{{message}}</p> 
 {% endfor %}
 {% endif %}
 <!-- Begin Site Title
-================================================== -->
+======================	============================ -->
 <div class="container">
 	<div class="mainheading">
-		<h1 class="sitetitle">Travel buddy</h1>
+		<h1 class="sitetitle">Atithi</h1>
 		<p class="lead">
-			Travel buddy - ease your traveling.
+			Atithi - ease your accomodation.
 		</p>
 	</div>
 <!-- End Site Title
@@ -39,30 +39,19 @@ mb-5" {% endif %}>{{message}}</p>
 			<div class="row">
 				<div class="col-md-5 wrapthumbnail">
 					<a href="{% url 'home-detail' ho.id %}">
-						<div class="thumbnail" style="background-image:url({{ho.image.url}});">
+						<div><img src="{{ho.image.url}}" ></div>
 						</div>
 					</a>
 				</div>
 				<div class="col-md-7">
 					<div class="card-block">
 						<h2 class="card-title"><a href="{% url 'home-detail' ho.id %}"></a></h2>
-					<strong>	<h4 >{{ho.title}}</h4></strong>
-					<div> <strong><h6> Price : ₹{{ho.price}}  </h5></strong></div>
+					<strong>	<h4 >{{ho.title | capfirst }}</h4></strong>
+					<div> <strong><h6> Price : ₹{{ho.price}} / per day</h5></strong></div>
 					<div> <strong><h6> Facility : {{ho.facility}}  </h6></strong></div>
-					<div> <strong><h6> location : {{ho.location}}  </h6></strong></div>
-					<div> <strong><h6> space : {{ho.space}}  </h6></strong></div>	
-					<div class="metafooter">
-							<div class="wrapfooter">
-								<span class="meta-footer-thumb">
-								<a href="{% url 'profile-detail' ho.houseown.user.id %}"><img class="author-thumb" src="{{ho.houseown.image.url}}" alt="Sal"></a>
-								</span>
-								<span class="author-meta">
-								<span class="post-name"><a href="#">{{ho.houseown.name}}</a></span><br/>
-								<span class="dot"></span><span class="post-read"></span>
-								</span>
-								<span class="post-read-more"><a href="{% url 'home-detail' ho.id %}" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
-							</div>
-						</div>
+					<div> <strong><h6> Location : {{ho.location | capfirst }}  </h6></strong></div>
+					<div> <strong><h6> Space : {{ho.space}}  </h6></strong></div>	
+		
 					</div>
 				</div>
 			</div>
@@ -78,4 +67,4 @@ mb-5" {% endif %}>{{message}}</p>
 	
 	</div>
 	</section>
-	{% endblock main %}
+{% endblock main %}

@@ -6,18 +6,18 @@
 {% block main %} 
 {% if messages %}
 {% for message in messages %}
+
 <p id= "message_container" {% if message.tags %}class="alert alert-{{message.tags}}
 mb-5" {% endif %}>{{message}}</p>  
 {% endfor %}
 {% endif %}
 	<section class="featured-posts">
 	<div class="section-title">
-		<h2><span>Meet travellers</span></h2>
+		<h2><span>Meet travellers</span></h2><br><br><br>	
 	</div>
-	<div class="card-columns listfeaturedtag">
+{% for trav in travellers %}
 
-
-		{% for trav in travellers %}
+<div class="card" style="width: 27rem;">
 
 				<div class="col-md-7">
 					<div class="card-block">
@@ -27,7 +27,10 @@ mb-5" {% endif %}>{{message}}</p>
 								<a href="{% url 'profile-detail' trav.user.id %}"><img class="author-thumb" src="{{ trav.image.url}}" alt="{{trav.name}}"></a>
 								</span>
 								<span class="author-meta">
-								<span class="post-name"><a href="#">{{trav.email}}</a></span><br/>
+								<h6><span class="post-name">{{trav.name |capfirst }}	</span><br/></h6>
+								<h6><span class="post-name">Email <a href="{% url 'profile-detail' trav.user.id %}">{{trav.email}}</a></span><br/></h6>
+								<h6><span class="post-name">Contact  number  <a href="#">{{trav.contact_no}}</a></span><br/></h6>
+							
 								<span class="dot"></span><span class="post-read"></span>
 								</span>
 								<span class="post-read-more"><a href="{% url 'profile-detail' trav.user.id %}" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
@@ -37,7 +40,55 @@ mb-5" {% endif %}>{{message}}</p>
 				</div>
 			</div>
 		</div>
-		{% endfor %}
+<div class="wrapfooter">
+		
+		<div
+		  class="chat__item__container"
+		  id="id_chat_item_container"
+		  style="font-size: 20px"
+		>
+	
+		</div>
+		<script>
+		  const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+		  chatSocket.onopen = function (e) {
+			console.log("The connection was setup successfully !");
+		  };
+		  chatSocket.onclose = function (e) {
+			console.log("Something unexpected happened !");
+		  };
+		  document.querySelector("#id_message_send_input").focus();
+		  document.querySelector("#id_message_send_input").onkeyup = function (e) {
+			if (e.keyCode == 13) {
+			  document.querySelector("#id_message_send_button").click();
+			}
+		  };
+		  document.querySelector("#id_message_send_button").onclick = function (e) {
+			var messageInput = document.querySelector(
+			  "#id_message_send_input"
+			).value;
+			chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}"}));
+		  };
+		  chatSocket.onmessage = function (e) {
+			const data = JSON.parse(e.data);
+			var div = document.createElement("div");
+			div.innerHTML = data.username + " : " + data.message;
+			document.querySelector("#id_message_send_input").value = "";
+			document.querySelector("#id_chat_item_container").appendChild(div);
+		  };
+		</script>
+
+
+
+
+
+
+
+</div>
+
 	</div>
+	<br>	{% endfor %}	
+	
 	</section>
 	{% endblock main %}
+	

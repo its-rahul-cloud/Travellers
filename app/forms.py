@@ -1,5 +1,5 @@
 from app import models
-from .models import Traveller, Houseown,Review
+from .models import Traveller,Houseown,Review, Comment, Post
 from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
@@ -20,6 +20,12 @@ class ProfileRegistrationForm(UserCreationForm):
         fields=['username','email','password1','password2']
         labels = { 'email':'Email'}
         widgets = {'username': forms.TextInput(attrs={'class':'form-control'})}
+    def save(self, commit=True):
+        user = super(ProfileRegistrationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+            return user
 
 
 class LoginForm(AuthenticationForm):
@@ -70,13 +76,43 @@ class ProfileForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['comment','image']
+        fields = ['comment']
 
         widgets = {
             'comment': forms.Textarea(attrs = {'rows':3, 'cols':40}),
-            'image':forms.FileInput(attrs={'class':'form-control'}),
+            
 
 
         }
     
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['subtitle','title','content','image']
+        widgets = {
+           'title':forms.TextInput(attrs={  'class':'form-control'}),
+           'content' :forms.Textarea(attrs={'class':'form-control'}),
+           'subtitle' :forms.TextInput(attrs={'class':'form-control'}),
+            'image':forms.FileInput(attrs={'class':'form-control'}),
+            
+
+        }
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']
+
+        widgets = {
+            'comment': forms.Textarea(attrs = {'rows':3, 'cols':40})
+        }
+    
+
+
+
+
 

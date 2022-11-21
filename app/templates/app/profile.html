@@ -23,12 +23,26 @@ mb-5" {% endif %}>{{message}}</p>
 						<h1>{{profile.name}}</h1>
 						<span class="author-description"> Email:--<a target="_blank" href="#">  {{profile.email}} </span><div>  </a>Contact no<strong>{{profile.contact_no}}</strong></div>
 						{% if request.user == profile.user %}
-						<a target="_blank" href="{% url 'profile_update' request.user.id %}" class="btn follow">Update</a>
+					<div><a target="_blank" href="{% url 'profile_update' request.user.id %}" class="btn follow">Update</a></div>
+					<br> <br>
+					<div><a target="_blank" href="{% url 'post-create'  %}" class="btn btn-primary">Create Post</a></div>
+						
 					    {% endif %}
 					</div>
 					<div class="col-md-2 col-xs-12">
 						<img class="author-thumb" src="{{profile.image.url}}" alt="{{profile.name}}">
+
 					</div>
+					{% if   request.user != profile.user  %}
+					<div>    <br>
+					
+						<div>
+							<a href="https://www.google.com/maps/place/29%C2%B053'28.4%22N+77%C2%B057'39.4%22E/@29.8912306,77.9587636,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0xd07a04328393538b!8m2!3d29.8912306!4d77.9609523?hl=en" ><button type="submit" class="btn btn-secondary" id="id_message_send_button  ">Location</button></a>
+						</div>
+
+						{% else %}
+						
+						{% endif %}
 				</div>
 			</div>
 		</div>
